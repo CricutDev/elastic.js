@@ -1390,11 +1390,13 @@ exports.aggregations = {
     test.done();
   },
   FilterAggregation: function (test) {
-    test.expect(9);
+    test.expect(11);
 
     var agg = ejs.FilterAggregation('myagg'),
       tf1 = ejs.TermFilter('t1', 'v1'),
       tf2 = ejs.TermFilter('t2', 'v2'),
+      tq1 = ejs.TermQuery('t1', 'v1'),
+      tq2 = ejs.TermQuery('t2', 'v2'),
       ta1 = ejs.TermsAggregation('ta1').field('f1'),
       expected,
       doTest = function () {
@@ -1417,6 +1419,14 @@ exports.aggregations = {
     expected.myagg.filter = tf2.toJSON();
     doTest();
 
+    agg.filterQuery(tq1);
+    expected.myagg.filter = tq1.toJSON();
+    doTest();
+
+    agg.filterQuery(tq2);
+    expected.myagg.filter = tq2.toJSON();
+    doTest();
+
     agg.agg(ta1);
     expected.myagg.aggs = ta1.toJSON();
     doTest();
@@ -1424,7 +1434,7 @@ exports.aggregations = {
     test.strictEqual(agg._type(), 'aggregation');
 
     test.throws(function () {
-      agg.agggregation('invalid');
+      agg.aggregation('invalid');
     }, TypeError);
 
     test.throws(function () {
