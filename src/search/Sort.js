@@ -434,7 +434,7 @@
           return sort[key].nested_filter;
         }
 
-        if (!isFilter(oFilter)) {
+        if (!isQuery(oQuery)) {
           throw new TypeError('Argument must be a Filter');
         }
 
