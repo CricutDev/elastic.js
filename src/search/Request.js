@@ -24,6 +24,28 @@
     var query = {};
 
     return {
+      
+      /**
+            Pagination of results can be done by using the from and size but the cost becomes prohibitive 
+            when the deep pagination is reached. The index.max_result_window which defaults to 10,000 
+            is a safeguard, search requests take heap memory and time proportional to from + size. 
+            The Scroll api is recommended for efficient deep scrolling but scroll contexts are costly and 
+            it is not recommended to use it for real time user requests. The search_after parameter 
+            circumvents this problem by providing a live cursor. The idea is to use the results from the 
+            previous page to help the retrieval of the next page.
+
+            @member ejs.Request
+            @param {Array} f The offset at which to start fetching results/documents from the result set.
+            @returns {Object} returns <code>this</code> so that calls can be chained.
+            */
+      searchAfter: function (sa) {
+        if (sa == null) {
+          return query.search_after;
+        }
+
+        query.search_after = sa;
+        return this;
+      },
 
       /**
             <p>Sets the sorting for the query.  This accepts many input formats.</p>
