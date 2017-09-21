@@ -1,5 +1,5 @@
 {
-  "name": "elastic.js",
+  "name": "@caa/elastic.js",
   "description": "Javascript API for ElasticSearch DSL",
   "version": "1.4.1",
   "homepage": "https://github.com/fullscale/elastic.js",
